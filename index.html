@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fanpage Kompleks Industri-Militer</title>
+
+    <style>
+        body {
+        
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #0b1e3f;
+            position: relative;
+            overflow-x: hidden;
+            transition: background-image 0.6s ease-in-out;
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Transparency overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.25);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0039a6;
+        }
+
+        .middle {
+            margin-top: 20px;
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+            height: 260px;
+        }
+
+        .arrow {
+            font-size: 40px;
+            cursor: pointer;
+            color: #0039a6;
+            user-select: none;
+            transition: 0.2s;
+        }
+
+        .arrow:hover {
+            transform: scale(1.2);
+        }
+
+        .company-container {
+            text-align: center;
+            height: 220px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        /* Fixed height for logo to prevent layout shift */
+        .company-logo {
+            width: 180px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 5px white);
+        }
+
+        .company-name {
+            font-size: 40px;
+            font-weight: bold;
+            color: #0b1e3f;
+            text-shadow: 0 0 5px #ffffff;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .divider {
+            margin-top: 20px;
+            width: 90%;
+            height: 3px;
+            background: #0039a6;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            margin-top: 30px;
+            width: 85%;
+            padding: 20px;
+            border: 3px solid #0039a6;
+            border-radius: 12px;
+            background: rgba(242, 246, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0,0,50,0.2);
+        }
+
+        .info-text {
+            font-size: 22px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="bgMusic" src="Lee Greenwood - God Bless The U.S.A.mp3" autoplay loop></audio>
+
+    <div class="header">
+        <div class="logo">Fanpage Kompleks Industri-Militer</div>
+    </div>
+
+    <div class="middle">
+        <div class="arrow" onclick="previousCompany()">&lt;</div>
+
+        <div class="company-container">
+            <img id="companyLogo" class="company-logo" src="" alt="Company Logo">
+            <div class="company-name" id="companyName">Raytheon</div>
+        </div>
+
+        <div class="arrow" onclick="nextCompany()">&gt;</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="info-box">
+        <div class="info-text" id="infoBox">
+            Makers of missiles, radars, and memes.
+        </div>
+    </div>
+
+    <script>
+        const companies = [
+            {
+                name: "Raytheon",
+                info: "Raytheon adalah perusahaan pertahanan dan kedirgantaraan Amerika yang terkenal dengan pengembangan sistem rudal canggih, teknologi radar, dan elektronik militer. Mereka dikenal lewat sistem seperti Patriot serta berbagai sensor presisi tinggi untuk pelacakan dan pertahanan.",
+                bg: "rms13_hm_hsv_pic001_lg-scaled.jpg.webp",
+                logo: "png-clipart-raytheon-technologies-logo-tech-companies-thumbnail-removebg-preview.png"
+            },
+            {
+                name: "Lockheed Martin",
+                info: "Northrop Grumman adalah kontraktor pertahanan besar di AS yang fokus pada teknologi siluman (stealth), drone otonom, sistem keamanan siber, dan rekayasa kedirgantaraan tingkat lanjut. Mereka adalah pembuat pesawat pembom siluman B-2 Spirit dan sedang mengembangkan B-21 Raider, serta terlibat dalam sistem pertahanan rudal dan teknologi militer jarak jauh.",
+                bg: "Lockheed-Martin-main-2.webp",
+                logo: "lockheed-martin-logo-115507185221xuaiupcbw-removebg-preview.png"
+            },
+            {
+                name: "Northrop Grumman",
+                info: "Lockheed Martin merupakan salah satu perusahaan pertahanan terbesar di dunia, terkenal karena membuat jet tempur seperti F-22 dan F-35, serta pesawat luar angkasa, helikopter, dan sistem rudal. Mereka bekerja di berbagai bidang—udara, darat, laut, dan ruang angkasa—dengan fokus pada proyek rekayasa kompleks untuk kebutuhan militer dan lembaga antariksa.",
+                bg: "Global_Hawk_1.jpg",
+                logo: "png-transparent-northrop-grumman-logo-blue-removebg-preview.png"
+            }
+        ];
+
+        let index = 0;
+
+        function updateDisplay() {
+            const c = companies[index];
+
+            document.getElementById("companyName").textContent = c.name;
+            document.getElementById("infoBox").textContent = c.info;
+            document.getElementById("companyLogo").src = c.logo;
+
+            document.body.style.backgroundImage = `url('${c.bg}')`;
+        }
+
+        document.body.addEventListener('click', function() {
+    document.getElementById('bgMusic').play();
+}, { once: true });
+
+        function nextCompany() {
+            index = (index + 1) % companies.length;
+            updateDisplay();
+        }
+
+        function previousCompany() {
+            index = (index - 1 + companies.length) % companies.length;
+            updateDisplay();
+        }
+
+        updateDisplay();
+    </script>
+
+</body>
+</html>

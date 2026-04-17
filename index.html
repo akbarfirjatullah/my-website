@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Fanpage Kompleks Industri-Militer</title>
-
     <style>
+        :root {
+            --primary-color: #0039a6;
+            --secondary-color: #0b1e3f;
+            --overlay-light: rgba(255, 255, 255, 0.25);
+        }
+
         body {
-        
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #0b1e3f;
+            color: var(--secondary-color);
             position: relative;
             overflow-x: hidden;
             transition: background-image 0.6s ease-in-out;
-
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
 
-        /* Transparency overlay */
         body::before {
             content: "";
             position: fixed;
@@ -31,9 +33,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.25);
+            background: var(--overlay-light);
             pointer-events: none;
             z-index: -1;
+            transition: background 0.4s ease;
         }
 
         .header {
@@ -45,7 +48,10 @@
         .logo {
             font-size: 32px;
             font-weight: bold;
-            color: #0039a6;
+            color: var(--primary-color);
+            text-shadow: 0 2px 6px rgba(255,255,255,0.7);
+            letter-spacing: 1px;
+            transition: color 0.25s ease;
         }
 
         .middle {
@@ -61,87 +67,195 @@
         }
 
         .arrow {
-            font-size: 40px;
+            font-size: 48px;
             cursor: pointer;
-            color: #0039a6;
+            color: var(--primary-color);
             user-select: none;
-            transition: 0.2s;
+            transition: all 0.2s;
+            font-weight: bold;
+            text-shadow: 0 0 8px white;
         }
 
         .arrow:hover {
             transform: scale(1.2);
+            color: var(--secondary-color);
         }
 
         .company-container {
             text-align: center;
-            height: 220px; 
+            height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
         }
 
-        /* Fixed height for logo to prevent layout shift */
         .company-logo {
             width: 180px;
             height: 150px;
             object-fit: contain;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 5px white);
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.9));
+            transition: filter 0.3s;
         }
 
         .company-name {
-            font-size: 40px;
-            font-weight: bold;
-            color: #0b1e3f;
-            text-shadow: 0 0 5px #ffffff;
-            height: 50px;
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px #ffffff, 0 2px 4px rgba(0,0,0,0.1);
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
+            letter-spacing: 1px;
+            transition: color 0.25s ease;
         }
 
         .divider {
             margin-top: 20px;
             width: 90%;
-            height: 3px;
-            background: #0039a6;
+            height: 4px;
+            background: var(--primary-color);
             border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: background 0.25s ease;
         }
 
         .info-box {
             margin-top: 30px;
+            margin-bottom: 20px;
             width: 85%;
-            padding: 20px;
-            border: 3px solid #0039a6;
-            border-radius: 12px;
-            background: rgba(242, 246, 255, 0.9);
-            box-shadow: 0 4px 12px rgba(0,0,50,0.2);
+            max-width: 1100px;
+            padding: 24px 28px;
+            border: 4px solid var(--primary-color);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 8px 20px rgba(0,0,50,0.15);
+            transition: border-color 0.25s ease, background 0.25s ease;
         }
 
         .info-text {
             font-size: 22px;
-            line-height: 1.5;
+            line-height: 1.6;
+            color: #0a1e3c;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .inventions-container {
+            width: 85%;
+            max-width: 1100px;
+            margin: 20px 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .invention-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .invention-desc {
+            flex: 2;
+            min-width: 260px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(2px);
+            border: 3px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 22px 26px;
+            box-shadow: 0 6px 14px rgba(0,0,40,0.1);
+            transition: border-color 0.25s ease;
+        }
+
+        .invention-desc h4 {
+            margin: 0 0 12px 0;
+            font-size: 26px;
+            color: var(--primary-color);
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            transition: color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .invention-desc p {
+            margin: 0;
+            font-size: 19px;
+            line-height: 1.6;
+            color: #102a43;
+        }
+
+        .invention-image {
+            flex: 1.2;
+            min-width: 220px;
+            background: rgba(240, 245, 255, 0.7);
+            backdrop-filter: blur(2px);
+            border: 3px solid var(--primary-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-shadow: 0 6px 14px rgba(0,0,40,0.1);
+            transition: border-color 0.25s ease;
+        }
+
+        .invention-image img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.6);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .placeholder-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(145deg, #a0b4d7, #c1d0e8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e3a6b;
+            border: 2px dashed var(--primary-color);
+            text-align: center;
+            padding: 16px;
+            transition: border-color 0.25s ease;
+        }
+
+        @media (max-width: 700px) {
+            .company-name { font-size: 32px; }
+            .info-text { font-size: 18px; }
+            .logo { font-size: 26px; }
+            .invention-row { flex-direction: column; }
         }
     </style>
 </head>
 
 <body>
-    <audio id="bgMusic" src="Lee Greenwood - God Bless The U.S.A.mp3" autoplay loop></audio>
+
+    <audio id="bgMusic" src="Lee Greenwood - God Bless The U.S.A.mp3" loop></audio>
 
     <div class="header">
-        <div class="logo">Fanpage Kompleks Industri-Militer</div>
+        <div class="logo">FANPAGE KOMPLEKS INDUSTRI-MILITER</div>
     </div>
 
     <div class="middle">
-        <div class="arrow" onclick="previousCompany()">&lt;</div>
+        <div class="arrow" onclick="previousCompany()">◀</div>
 
         <div class="company-container">
             <img id="companyLogo" class="company-logo" src="" alt="Company Logo">
             <div class="company-name" id="companyName">Raytheon</div>
         </div>
 
-        <div class="arrow" onclick="nextCompany()">&gt;</div>
+        <div class="arrow" onclick="nextCompany()">▶</div>
     </div>
 
     <div class="divider"></div>
@@ -152,56 +266,232 @@
         </div>
     </div>
 
+    <div id="inventionsContainer" class="inventions-container"></div>
+
     <script>
-        const companies = [
-            {
-                name: "Raytheon",
-                info: "Raytheon adalah perusahaan pertahanan dan kedirgantaraan Amerika yang terkenal dengan pengembangan sistem rudal canggih, teknologi radar, dan elektronik militer. Mereka dikenal lewat sistem seperti Patriot serta berbagai sensor presisi tinggi untuk pelacakan dan pertahanan.",
-                bg: "rms13_hm_hsv_pic001_lg-scaled.jpg.webp",
-                logo: "png-clipart-raytheon-technologies-logo-tech-companies-thumbnail-removebg-preview.png"
-            },
-            {
-                name: "Lockheed Martin",
-                info: "Northrop Grumman adalah kontraktor pertahanan besar di AS yang fokus pada teknologi siluman (stealth), drone otonom, sistem keamanan siber, dan rekayasa kedirgantaraan tingkat lanjut. Mereka adalah pembuat pesawat pembom siluman B-2 Spirit dan sedang mengembangkan B-21 Raider, serta terlibat dalam sistem pertahanan rudal dan teknologi militer jarak jauh.",
-                bg: "Lockheed-Martin-main-2.webp",
-                logo: "lockheed-martin-logo-115507185221xuaiupcbw-removebg-preview.png"
-            },
-            {
-                name: "Northrop Grumman",
-                info: "Lockheed Martin merupakan salah satu perusahaan pertahanan terbesar di dunia, terkenal karena membuat jet tempur seperti F-22 dan F-35, serta pesawat luar angkasa, helikopter, dan sistem rudal. Mereka bekerja di berbagai bidang—udara, darat, laut, dan ruang angkasa—dengan fokus pada proyek rekayasa kompleks untuk kebutuhan militer dan lembaga antariksa.",
-                bg: "Global_Hawk_1.jpg",
-                logo: "png-transparent-northrop-grumman-logo-blue-removebg-preview.png"
+        (function() {
+            const companies = [
+                {
+                    name: "Raytheon",
+                    info: "Raytheon adalah perusahaan pertahanan dan kedirgantaraan Amerika yang terkenal dengan pengembangan sistem rudal canggih, teknologi radar, dan elektronik militer. Mereka dikenal lewat sistem seperti Patriot serta berbagai sensor presisi tinggi untuk pelacakan dan pertahanan.",
+                    bg: "rms13_hm_hsv_pic001_lg-scaled.jpg.webp",
+                    logo: "png-clipart-raytheon-technologies-logo-tech-companies-thumbnail-removebg-preview.png",
+                    primaryColor: "#DA291C",
+                    secondaryColor: "#1E1E1E",
+                    overlayTint: "rgba(218, 41, 28, 0.08)",
+                    inventions: [
+                        { 
+                            name: "MIM-104 Patriot", 
+                            desc: "Sistem pertahanan udara dan rudal jarak menengah hingga jauh. Mampu mencegat pesawat, drone, dan rudal balistik taktis. Telah digunakan oleh banyak negara aliansi.",
+                            image: "" 
+                        },
+                        { 
+                            name: "AIM-120 AMRAAM", 
+                            desc: "Rudal udara-ke-udara jarak menengah dengan radar aktif. Menjadi andalan superioritas udara untuk pesawat tempur NATO dan sekutu.",
+                            image: "" 
+                        },
+                        { 
+                            name: "Tomahawk", 
+                            desc: "Rudal jelajah serang darat jarak jauh yang dapat diluncurkan dari kapal atau kapal selam. Digunakan dalam berbagai operasi militer presisi tinggi.",
+                            image: "" 
+                        },
+                        { 
+                            name: "AN/SPY-6", 
+                            desc: "Radar phased-array aktif untuk kapal perusak kelas Arleigh Burke Flight III. Meningkatkan kemampuan deteksi dan pertahanan udara armada.",
+                            image: "" 
+                        },
+                        { 
+                            name: "HELWS (Laser Weapon System)", 
+                            desc: "Sistem senjata laser berenergi tinggi untuk menanggulangi drone dan ancaman udara kecil. Dikembangkan untuk pertahanan pangkalan.",
+                            image: "" 
+                        }
+                    ]
+                },
+                {
+                    name: "Lockheed Martin",
+                    info: "Lockheed Martin adalah perusahaan kedirgantaraan dan pertahanan global yang memproduksi pesawat tempur canggih seperti F-22 Raptor dan F-35 Lightning II, serta sistem rudal, satelit, dan teknologi ruang angkasa. Mereka juga mengembangkan sistem pertahanan rudal dan helikopter legendaris.",
+                    bg: "Lockheed-Martin-main-2.webp",
+                    logo: "lockheed-martin-logo-115507185221xuaiupcbw-removebg-preview.png",
+                    primaryColor: "#002D72",
+                    secondaryColor: "#102A43",
+                    overlayTint: "rgba(0, 45, 114, 0.08)",
+                    inventions: [
+                        { 
+                            name: "F-35 Lightning II", 
+                            desc: "Jet tempur siluman multiperan generasi kelima. Tersedia dalam tiga varian untuk angkatan udara, marinir, dan operasi kapal induk.",
+                            image: "" 
+                        },
+                        { 
+                            name: "F-22 Raptor", 
+                            desc: "Pesawat tempur superioritas udara dengan kemampuan siluman dan manuver ekstrem. Menjadi tulang punggung pertahanan udara AS.",
+                            image: "" 
+                        },
+                        { 
+                            name: "C-130 Hercules", 
+                            desc: "Pesawat angkut taktis legendaris yang telah beroperasi lebih dari 60 tahun, digunakan untuk transportasi, pengintaian, dan misi khusus.",
+                            image: "" 
+                        },
+                        { 
+                            name: "THAAD", 
+                            desc: "Sistem pertahanan rudal balistik fase terminal. Dirancang untuk mencegat rudal jarak pendek dan menengah di ketinggian tinggi.",
+                            image: "" 
+                        },
+                        { 
+                            name: "Aegis Combat System", 
+                            desc: "Sistem tempur terintegrasi untuk kapal perang, menggabungkan radar canggih dan rudal untuk pertahanan udara dan rudal balistik.",
+                            image: "" 
+                        }
+                    ]
+                },
+                {
+                    name: "Northrop Grumman",
+                    info: "Northrop Grumman adalah kontraktor pertahanan yang mengkhususkan diri dalam pesawat siluman, sistem otonom, dan teknologi siber. Mereka dikenal dengan pembom B-2 Spirit, pengembangan B-21 Raider, serta drone pengintai Global Hawk. Fokus pada teknologi siluman dan misi kritis.",
+                    bg: "Global_Hawk_1.jpg",
+                    logo: "png-transparent-northrop-grumman-logo-blue-removebg-preview.png",
+                    primaryColor: "#0054A6",
+                    secondaryColor: "#0B2D4F",
+                    overlayTint: "rgba(0, 84, 166, 0.08)",
+                    inventions: [
+                        { 
+                            name: "B-2 Spirit", 
+                            desc: "Pembom strategis siluman yang mampu menembus pertahanan udara musuh. Dapat membawa muatan konvensional maupun nuklir.",
+                            image: "" 
+                        },
+                        { 
+                            name: "B-21 Raider", 
+                            desc: "Pembom siluman generasi terbaru yang sedang dikembangkan untuk menggantikan B-2 dan B-1, dengan kemampuan lebih canggih.",
+                            image: "" 
+                        },
+                        { 
+                            name: "RQ-4 Global Hawk", 
+                            desc: "Drone pengintai ketinggian tinggi dengan daya tahan lama, digunakan untuk pengawasan area luas dan pengumpulan intelijen.",
+                            image: "" 
+                        },
+                        { 
+                            name: "X-47B", 
+                            desc: "Demonstrator drone tempur tak berawak yang mampu lepas landas dan mendarat di kapal induk, membuka jalan bagi armada udara masa depan.",
+                            image: "" 
+                        },
+                        { 
+                            name: "AN/APG-81 (Radar F-35)", 
+                            desc: "Radar AESA canggih untuk F-35, menyediakan kemampuan deteksi multi-mode dan peperangan elektronik.",
+                            image: "" 
+                        }
+                    ]
+                }
+            ];
+
+            let index = 0;
+
+            const companyNameEl = document.getElementById("companyName");
+            const infoBoxEl = document.getElementById("infoBox");
+            const companyLogoEl = document.getElementById("companyLogo");
+            const bodyEl = document.body;
+            const root = document.documentElement;
+            const inventionsContainer = document.getElementById("inventionsContainer");
+
+            function updateOverlayStyle(whiteBase, tint) {
+                let styleTag = document.getElementById('dynamic-overlay-style');
+                if (!styleTag) {
+                    styleTag = document.createElement('style');
+                    styleTag.id = 'dynamic-overlay-style';
+                    document.head.appendChild(styleTag);
+                }
+                styleTag.textContent = `
+                    body::before {
+                        background: ${tint}, ${whiteBase} !important;
+                        background-blend-mode: overlay;
+                    }
+                `;
             }
-        ];
 
-        let index = 0;
+            function renderInventions(company) {
+                inventionsContainer.innerHTML = '';
+                
+                company.inventions.forEach(inv => {
+                    const row = document.createElement('div');
+                    row.className = 'invention-row';
 
-        function updateDisplay() {
-            const c = companies[index];
+                    const descDiv = document.createElement('div');
+                    descDiv.className = 'invention-desc';
+                    const title = document.createElement('h4');
+                    title.textContent = inv.name;
+                    const descText = document.createElement('p');
+                    descText.textContent = inv.desc;
+                    descDiv.appendChild(title);
+                    descDiv.appendChild(descText);
 
-            document.getElementById("companyName").textContent = c.name;
-            document.getElementById("infoBox").textContent = c.info;
-            document.getElementById("companyLogo").src = c.logo;
+                    const imgDiv = document.createElement('div');
+                    imgDiv.className = 'invention-image';
+                    
+                    if (inv.image && inv.image.trim() !== '') {
+                        const img = document.createElement('img');
+                        img.src = inv.image;
+                        img.alt = inv.name;
+                        imgDiv.appendChild(img);
+                    } else {
+                        const placeholder = document.createElement('div');
+                        placeholder.className = 'placeholder-img';
+                        placeholder.textContent = `[Gambar ${inv.name} - isi nanti]`;
+                        imgDiv.appendChild(placeholder);
+                    }
 
-            document.body.style.backgroundImage = `url('${c.bg}')`;
-        }
+                    row.appendChild(descDiv);
+                    row.appendChild(imgDiv);
+                    inventionsContainer.appendChild(row);
+                });
+            }
 
-        document.body.addEventListener('click', function() {
-    document.getElementById('bgMusic').play();
-}, { once: true });
+            function applyCompanyTheme(company) {
+                companyNameEl.textContent = company.name;
+                infoBoxEl.textContent = company.info;
+                companyLogoEl.src = company.logo;
+                bodyEl.style.backgroundImage = `url('${company.bg}')`;
 
-        function nextCompany() {
-            index = (index + 1) % companies.length;
-            updateDisplay();
-        }
+                root.style.setProperty('--primary-color', company.primaryColor);
+                root.style.setProperty('--secondary-color', company.secondaryColor);
+                const whiteOverlay = "rgba(255, 255, 255, 0.25)";
+                updateOverlayStyle(whiteOverlay, company.overlayTint);
 
-        function previousCompany() {
-            index = (index - 1 + companies.length) % companies.length;
-            updateDisplay();
-        }
+                renderInventions(company);
+            }
 
-        updateDisplay();
+            function nextCompany() {
+                index = (index + 1) % companies.length;
+                applyCompanyTheme(companies[index]);
+            }
+
+            function previousCompany() {
+                index = (index - 1 + companies.length) % companies.length;
+                applyCompanyTheme(companies[index]);
+            }
+
+            window.nextCompany = nextCompany;
+            window.previousCompany = previousCompany;
+
+            applyCompanyTheme(companies[0]);
+
+            const bgMusic = document.getElementById('bgMusic');
+            document.body.addEventListener('click', function initAudio() {
+                if (bgMusic.paused) {
+                    bgMusic.play().catch(e => console.log("Audio play prevented: click to start"));
+                }
+            }, { once: true });
+            bgMusic.load();
+
+        })();
     </script>
 
+    <style>
+        .invention-desc, .invention-image, .info-box, .divider, .arrow, .logo, .company-name {
+            transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+        }
+        .placeholder-img {
+            transition: border-color 0.25s ease;
+        }
+        body::before {
+            transition: background 0.4s ease;
+        }
+    </style>
 </body>
 </html>
